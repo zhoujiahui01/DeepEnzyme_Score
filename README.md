@@ -143,7 +143,7 @@ python scripts/generate_mutant_sequences.py \
 
 ---
 
-## Step 5: Structure Modelling (Boltz2)
+## Step 4: Structure Modelling (Boltz2)
 
 Each variant sequence will be modelled in complex with substrate using the **Boltz2 modelling protocol**.
 

@@ -1,45 +1,19 @@
-# DCCM-guided Identification of Distal Allosteric Mutations for Enzyme Activity Enhancement
+# DeepEnyme_score : Identification of Distal Allosteric Mutations for modulating Enzyme functions 
 
-Here we present an approach for identifying and screening enzyme mutations with enhanced activity at distal sites.
-The approach integrates **molecular dynamics (MD) simulations**, **dynamic cross-correlation matrix (DCCM) analysis**, **sequence conservation filtering**, and **machine-learning–assisted ranking** to rationally design distal variants with improved performance.
-
-**The manuscript is currently under review.**  
-**Application demonstrated on**: Type I terpene synthases (Agr5)
+Here we present an approach for identifying and screening distal mutations sites of enzymes for enhanced activity. The approach integrates **dynamic cross-correlation matrix (DCCM) analysis**, and** machine-learning–assisted ranking** to rationally screen distal variants for tailored enzyme function.
 
 ---
 
 ## Overview
 
-Traditional enzyme engineering strategies primarily focus on residues in or near the active site. However, increasing evidence suggests that **long-range dynamic coupling and allosteric communication** play a critical role in catalysis.
+Traditional enzyme engineering strategies primarily focus on residues around the active site. However, increasing evidence suggests that **long-range dynamic coupling and allosteric communication** play a critical role in catalysis.
 
-This workflow enables:
-- Identification of **remote residues dynamically coupled** to catalytic-site perturbations
-- Rational selection of **non-conserved distal positions**
-- Construction of a **focused single-mutant library**
-- Prioritization of variants using **structure- and sequence-based ML predictors**
 
 ---
 
 ## Workflow Summary
-<img width="1707" height="426" alt="image" src="https://github.com/user-attachments/assets/66994de1-d66f-4d8b-b89a-d0c1a4ba5fb4" />
+<img width="1810" height="427" alt="image" src="https://github.com/user-attachments/assets/a1bcf1c8-2032-47b3-9cb1-94e1856e58cb" />
 
-Active-site mutation (reference variant)
-→
-MD simulations (WT + variant)
-→
-DCCM analysis
-→
-ΔDCCM (WT − Variant)
-→
-Identification of dynamically perturbed distal residues
-→
-MSA-based conservation filtering
-→
-Single-mutation library construction
-→
-Structure modelling + ML scoring
-→
-Experimental validation
 
 ---
 
@@ -57,22 +31,20 @@ AmberTools (cpptraj)
 
 ## Input Data
 
-The pipeline starts from **pre-computed MD trajectories**:
+The Machine learning pipeline is based on **MD trajectories**
 
-- Wild-type enzyme MD trajectory
-- Best-performing active-site variant MD trajectory  (e.g. V314G in this tutorial)
 
 ---
 
 ## Step 1: MD Trajectory Processing
 
-> **Note:** MD simulations themselves are not included here and should be performed using standard protocols (e.g. AMBER, GROMACS).
+> **Note:** MD simulations are performed using standard MD software packages (e.g. AMBER, GROMACS).
 
 ---
 
 ## Step 2: DCCM and ΔDCCM Analysis
 
-Dynamic cross-correlation matrices (DCCMs) were generated for both the wild-type enzyme and the reference active-site variant using the `cpptraj` module of AmberTools.  
+Dynamic cross-correlation matrices (DCCMs) were generated using the `cpptraj` module of AmberTools.  
 For each MD trajectory, the following command was used:
 
 ```bash
@@ -80,63 +52,48 @@ matrix correl name DCCM @CA out dccm.dat
 ```
 This command computes Cα–Cα dynamic cross-correlation coefficients and outputs the DCCM as a plain-text matrix (dccm.dat).
 
-For each WT–variant pair, the resulting DCCM files were post-processed using Python scripts provided in this repository to identify residues dynamically coupled to a specified reference position, and outputs the results as a CSV file:
+The DCCM file of the enzyme species were post-processed using Python scripts provided in this repository to identify residues dynamically coupled to a specified reference position, and the results are saved as a CSV file:
 
 ```
 python scripts/DCCM-csv.py \
-  --wt data/dccm/Agr5_WT.dat \
-  --mut data/dccm/Agr5_mutant.dat \
+  --wt data/dccm/WT.dat \
+  --mut data/dccm/mutant.dat \
   --ref-res 42 \
   --threshold 0.3 \
-  --out results/DCCM_Agr5_mutant.csv
-```
-
-You can generate visualizations of the WT DCCM, variant DCCM, and the absolute ΔDCCM matrix by using Python script:
-
-```
-python scripts/DCCM-plot.py \
-  --wt data/dccm/Agr5_WT.dat \
-  --mut data/dccm/Agr5_mutant.dat \
-  --prefix Agr5_mutant \
-  --outdir results/dccm_plots \
-  --threshold 0.3
+  --out results/DCCM_mutant.csv
 ```
 
 
 ---
 
-## Step 3: Focused Single-Mutation Library Design
+## Step 3: Focused Mutation Library Design
 
-To avoid disrupting conserved structural or functional elements:
-- Candidate residues are cross-referenced with a **multiple sequence alignment (MSA)** of homologous enzymes
-- **Non-conserved positions only** are retained.
-
-> The `.aln` file required for MSA analysis is generated by `BLAST`.
-
-Run the following scripts to obtain the retained position information.
+Run the following scripts to obtain the non-conserved position information.
 ```
 python scripts/msa_consensus.py \
-  --aln data/MSA/Agr5_and_varinats.aln \
+  --aln data/MSA/and_varinats.aln \
   --out results/msa_consensus.txt
 ```
 
+> The `.aln` file required for MSA analysis is generated by `BLAST`.
+
 Then for each retained position:
-- A **single substitution** will be introduced
-- The target amino acid will be chosen as the **most frequently observed residue at that position** in the MSA
-> The `.fasta` file is the sequence for wild type enzyme.
+- The **most frequently observed residue at that position** in the MSA
 ```
 python scripts/design_mutations.py \
-  --positions results/DCCM_Agr5_mutant.csv \
+  --positions results/DCCM_mutant.csv \
   --consensus results/msa_consensus.txt \
-  --wt-seq data/sequences/Agr5_WT.fasta \
+  --wt-seq data/sequences/WT.fasta \
   --out results/mutation_list.txt
 ```
 
-You can generate sequences for downstream modeling and scoring task 
+> The `.fasta` file is the sequence for wild type enzyme is chosen as the amino acid to be mutated into.
+
+New sequences are generated for downstream deep-learning based modeling and scoring task 
 
 ```
 python scripts/generate_mutant_sequences.py \
-  --wt-seq data/sequences/Agr5_WT.fasta \
+  --wt-seq data/sequences/WT.fasta \
   --mutations results/mutation_list.txt \
   --out results/single_mutant_library.csv
 ```
@@ -145,27 +102,23 @@ python scripts/generate_mutant_sequences.py \
 
 ## Step 4: Structure Modelling (Boltz2)
 
-Each variant sequence will be modelled in complex with substrate using the **Boltz2 modelling protocol**.
+The structure of each sequence in complex with substrate is modelled using the **Boltz2 modelling protocol**.
 
 Catalytic turnover numbers (`kcat`) will be predicted using **DLKcat**.
 
 > Boltz2 and DLKcat are an external tools and are **not implemented in this repository**.
 
 
+Variants are ranked by a composite score that we designed, integrating both binding affinity and catalytic efficiency of enzymes,
 
-To jointly consider binding and catalysis, we define:
-
+DeepEnzyme_Score:
 $\`
 DeepEnzyme score = kcat / (1 - Affinity score)
 \`$
 
-Variants are ranked by this composite score.
-
 **Output:**
 
 Ranked list of candidate distal mutations.
-
-Top 10 variants selected for experimental validation.
 
 
 ## Directory Structure
@@ -188,5 +141,15 @@ Top 10 variants selected for experimental validation.
 │   └── ranked_variants.csv
 └── environment.yml
 ```
+## Note
 
+This Github project code are demonstrated on: Terpene synthases 
 
+The associated manuscript is currently under review.
+
+## Contact
+Jiahui Zhou (jiahui.zhou@qub.ac.uk) Queen's University Belfast, UK
+
+Meilan Huang (m.huang@qub.ac.uk) Queen's University Belfast, UK
+
+https://www.huanggroup.co.uk/

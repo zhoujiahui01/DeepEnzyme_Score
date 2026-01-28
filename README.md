@@ -1,18 +1,24 @@
-# DeepEnyme_score : Identification of Distal Allosteric Mutations for modulating Enzyme functions 
+# DeepEnyme_score: Identification of Global Mutations for modulating Enzyme functions 
 
-Here we present an approach for identifying and screening distal mutations sites of enzymes for enhanced activity. The approach integrates **dynamic cross-correlation matrix (DCCM) analysis**, and** machine-learning–assisted ranking** to rationally screen distal variants for tailored enzyme function.
+Here we present an approach for identifying and screening global mutations sites of enzymes including distal sites for enhanced activity. The approach integrates **dynamic cross-correlation matrix (DCCM) analysis**, and** machine-learning–assisted ranking** to rationally screen beneficial variants for tailored enzyme function.
 
 ---
 
 ## Overview
 
-Traditional enzyme engineering strategies primarily focus on residues around the active site. However, increasing evidence suggests that **long-range dynamic coupling and allosteric communication** play a critical role in catalysis.
+Traditional enzyme engineering strategies primarily focus on residues around the active site. However, increasing evidence suggests that **long-range dynamic coupling and allosteric communication** play a critical role in enzyme catalysis.
+
+We develop a  workflow to:
+-Identify **remote residues dynamically coupled** to catalytic-site perturbations
+-Construct **focused mutant library**
+-Prioritize variants using **DeepEnzyme_Score**
 
 
 ---
 
 ## Workflow Summary
-<img width="1810" height="427" alt="image" src="https://github.com/user-attachments/assets/a1bcf1c8-2032-47b3-9cb1-94e1856e58cb" />
+
+<img width="1234" height="479" alt="image" src="https://github.com/user-attachments/assets/7a6e7213-06db-4a49-a147-fac0b7d98984" />
 
 
 ---
@@ -42,7 +48,7 @@ The Machine learning pipeline is based on **MD trajectories**
 
 ---
 
-## Step 2: DCCM and ΔDCCM Analysis
+## Step 2: DCCM Analysis
 
 Dynamic cross-correlation matrices (DCCMs) were generated using the `cpptraj` module of AmberTools.  
 For each MD trajectory, the following command was used:
@@ -52,7 +58,7 @@ matrix correl name DCCM @CA out dccm.dat
 ```
 This command computes Cα–Cα dynamic cross-correlation coefficients and outputs the DCCM as a plain-text matrix (dccm.dat).
 
-The DCCM file of the enzyme species were post-processed using Python scripts provided in this repository to identify residues dynamically coupled to a specified reference position, and the results are saved as a CSV file:
+The DCCM file of the enzyme species were processed using the following Python scripts to identify residues dynamically coupled to a specified reference position, and the results are saved as a CSV file:
 
 ```
 python scripts/DCCM-csv.py \
@@ -106,12 +112,11 @@ The structure of each sequence in complex with substrate is modelled using the *
 
 Catalytic turnover numbers (`kcat`) will be predicted using **DLKcat**.
 
-> Boltz2 and DLKcat are an external tools and are **not implemented in this repository**.
+> [Boltz2](https://github.com/jwohlwend/boltz) and [DLKcat](https://github.com/SysBioChalmers/DLKcat) are an external tools and are **not implemented in this repository**.
 
 
-Variants are ranked by a composite score that we designed, integrating both binding affinity and catalytic efficiency of enzymes,
+We designed a composite score **DeepEnzyme_Score**, to rank the variants, integrating both binding affinity and catalytic efficiency of enzymes,
 
-DeepEnzyme_Score:
 $\`
 DeepEnzyme score = kcat / (1 - Affinity score)
 \`$
@@ -153,3 +158,5 @@ Jiahui Zhou (jiahui.zhou@qub.ac.uk) Queen's University Belfast, UK
 Meilan Huang (m.huang@qub.ac.uk) Queen's University Belfast, UK
 
 https://www.huanggroup.co.uk/
+
+

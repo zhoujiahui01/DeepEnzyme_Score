@@ -117,9 +117,6 @@ Catalytic turnover numbers (`kcat`) will be predicted using **DLKcat**.
 
 We designed a composite score **DeepEnzyme_Score**, to rank the variants, integrating both binding affinity and catalytic efficiency of enzymes,
 
-$\`
-DeepEnzyme score = kcat / (1 - Affinity score)
-\`$
 
 **Output:**
 

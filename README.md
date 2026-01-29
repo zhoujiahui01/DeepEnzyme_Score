@@ -18,7 +18,7 @@ We develop a  workflow to:
 
 ## Workflow Summary
 
-<img width="1234" height="479" alt="image" src="https://github.com/user-attachments/assets/7a6e7213-06db-4a49-a147-fac0b7d98984" />
+<img width="1234" height="363" alt="image" src="https://github.com/user-attachments/assets/01f4d2c9-a24e-4bc4-b449-43846b24b45b" />
 
 
 ---

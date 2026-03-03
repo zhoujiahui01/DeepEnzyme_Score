@@ -149,11 +149,5 @@ This Github project code are demonstrated on: Terpene synthases
 
 The associated manuscript is currently under review.
 
-## Contact
-Jiahui Zhou (jiahui.zhou@qub.ac.uk) Queen's University Belfast, UK
-
-Meilan Huang (m.huang@qub.ac.uk) Queen's University Belfast, UK
-
-https://www.huanggroup.co.uk/
 
 

@@ -115,7 +115,7 @@ Catalytic turnover numbers (`kcat`) will be predicted using **DLKcat**.
 > [Boltz2](https://github.com/jwohlwend/boltz) and [DLKcat](https://github.com/SysBioChalmers/DLKcat) are an external tools and are **not implemented in this repository**.
 
 
-We designed a composite score **DeepEnzyme_Score**, to rank the variants, integrating both binding affinity and catalytic efficiency of enzymes,
+We designed a composite score **DeepEnzyme_Score**, to rank the variants, integrating both binding affinity and catalytic efficiency of enzymes.
 
 
 **Output:**
@@ -126,10 +126,7 @@ Ranked list of candidate distal mutations.
 
 For specific systems, such as the sesquiterpene synthase mentioned in the references, Prebuilt structures can serve as structural module references for Boltz2. One example is using [TerDockin](https://docs.rosettacommons.org/docs/latest/Terpene-docking) to construct the multi-ligand complex for terpene synthases.
 
-
-**Output:**
-
-Ranked list of candidate distal mutations.
+The TerDockin script can be found in the example folder.
 
 
 ## Directory Structure

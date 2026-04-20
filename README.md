@@ -77,7 +77,7 @@ python scripts/DCCM-csv.py \
 Run the following scripts to obtain the non-conserved position information.
 ```
 python scripts/msa_consensus.py \
-  --aln data/MSA/and_varinats.aln \
+  --aln data/MSA/homologous.aln \
   --out results/msa_consensus.txt
 ```
 

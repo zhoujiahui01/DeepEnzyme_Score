@@ -122,6 +122,15 @@ We designed a composite score **DeepEnzyme_Score**, to rank the variants, integr
 
 Ranked list of candidate distal mutations.
 
+## Step 5: TerDockin (optional)
+
+For specific systems, such as the sesquiterpene synthase mentioned in the references, Prebuilt structures can serve as structural module references for Boltz2. One example is using [TerDockin](https://docs.rosettacommons.org/docs/latest/Terpene-docking) to construct the multi-ligand complex for terpene synthases.
+
+
+**Output:**
+
+Ranked list of candidate distal mutations.
+
 
 ## Directory Structure
 

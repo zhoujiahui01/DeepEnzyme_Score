@@ -124,7 +124,7 @@ Ranked list of candidate distal mutations.
 
 ## Step 5: TerDockin (optional)
 
-For specific systems, such as the sesquiterpene synthase mentioned in the references, Prebuilt structures can serve as structural module references for Boltz2. One example is using [TerDockin](https://docs.rosettacommons.org/docs/latest/Terpene-docking) to construct the multi-ligand complex for terpene synthases.
+For specific systems, such as the sesquiterpene synthases in the example case, Prebuilt structures can serve as structural module references for Boltz2. One example is using [TerDockin](https://docs.rosettacommons.org/docs/latest/Terpene-docking) to construct the multi-ligand complex for terpene synthases.
 
 The TerDockin script can be found in the example folder.
 

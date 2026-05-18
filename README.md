@@ -153,7 +153,9 @@ The TerDockin script can be found in the example folder.
 
 This Github project code are demonstrated on: Terpene synthases 
 
-The associated manuscript is currently under review.
+The associate manucript has been accepted for publication in ACS Catalysis (May 18, 2026)
+Title: Customizing Natural Products of Sesquiterpene Synthases by Mechanism-based Design and DeEnzyme_Score Screening
+Authors: Jiahui Zhou, Xiaoguang Yan, Mingyue Ge, Jiaqi Lin, Shengxin Nie, Yue Qu, Weiguo Li, Shengbo Wu, Qinggele Caiyin, Warispreet Singh, Jianjun Qiao, Meilan Huang
 
 
 

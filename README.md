@@ -155,7 +155,7 @@ This Github project code are demonstrated on: Terpene synthases
 
 The associate manucript has been accepted for publication in ACS Catalysis (DOI: 10.1021/acscatal.6c01200)
 
-If you find ECPred useful, please consider citing our publication:
+If you find this work useful, please consider citing our publication:
 
 ```
 Title: Customizing Natural Products of Sesquiterpene Synthases by Mechanism-based Design and DeEnzyme_Score Screening
